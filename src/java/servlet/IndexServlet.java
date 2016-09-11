@@ -16,7 +16,7 @@ import database.Consultas;
 
 /**
  *
- * @author Cesar
+ * @author Matias
  */
 @WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {

@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 /**
  *
- * @author Cesar
+ * @author Matias
  */
 public class Consultas {
     
@@ -34,7 +34,7 @@ public class Consultas {
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
             java.sql.Connection conn = ds.getConnection();
             
-            String sql = "SELECT id, LOWER(descripcion) as descripcion FROM nacionalidades";
+            String sql = "SELECT id, LOWER(nacionalidad) as descripcion FROM nacionalidades";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -64,7 +64,7 @@ public class Consultas {
                             " LOWER( nombre ) as nombre, " +
                             " TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) as edad," +
                             " activo," +
-                            " LOWER(nacionalidades.descripcion) as nacionalidad" +
+                            " LOWER(nacionalidades.nacionalidad) as nacionalidad" +
                         " FROM clientes " +
                             " join nacionalidades " +
                             " on clientes.nacionalidad_id = nacionalidades.id";

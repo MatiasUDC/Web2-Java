@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 /**
  *
- * @author universidad
+ * @author Matias
  */
 public class Usuario {
     private String nombre;

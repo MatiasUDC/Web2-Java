@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Cesar
+ * @author Matias
  */
 @WebServlet(name = "ProcesarBajaServlet", urlPatterns = {"/ProcesarBaja"})
 public class ProcesarBajaServlet extends HttpServlet {

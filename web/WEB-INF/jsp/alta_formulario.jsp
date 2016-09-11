@@ -1,7 +1,7 @@
 <%-- 
     Document   : alta_fomulario
     Created on : 07-sep-2016, 3:08:38
-    Author     : Cesar
+    Author     : Matias
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -23,7 +23,7 @@
             $( "#datepicker" ).datepicker({ minDate: new Date('1920-01-01'), maxDate: new Date(), changeYear:true, changeMonth: true, dateFormat: 'dd-mm-yy'});
           } );
         </script>
-        <form class="form-horizontal" method="POST" action="/ProcesarAlta" id="formulario_index">
+        <form class="form-horizontal" method="POST" action="ProcesarAlta" id="formulario_index">
             <div class="container">
                 <div class="row-flow">
                     <p></p>

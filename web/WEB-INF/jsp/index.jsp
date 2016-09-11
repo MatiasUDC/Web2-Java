@@ -1,7 +1,7 @@
 <%-- 
     Document   : indexjsp
     Created on : 06-sep-2016, 1:05:41
-    Author     : Cesar
+    Author     : Matias
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -43,7 +43,7 @@
                         </div><!-- /.container-fluid -->
                     </nav>
                     <div class="col-md-8">
-                        <h3>Clientes <a href="/alta_fomulario"><small>Nuevo</small></a></h3>
+                        <h3>Clientes <a href="alta"><small>Nuevo</small></a></h3>
                         <table class="table table-condensed">
                             <tr>
                                 <td><strong>Nombre</strong></td>

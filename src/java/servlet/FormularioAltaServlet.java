@@ -17,9 +17,9 @@ import java.util.LinkedList;
 
 /**
  *
- * @author Cesar
+ * @author Matias
  */
-@WebServlet(name = "formulario_altaServlet", urlPatterns = {"/alta_fomulario"})
+@WebServlet(name = "formulario_altaServlet", urlPatterns = {"/alta"})
 public class FormularioAltaServlet extends HttpServlet {
 
     /**

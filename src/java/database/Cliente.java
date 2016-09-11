@@ -5,6 +5,7 @@
  */
 package database;
 
+import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ import javax.sql.DataSource;
 
 /**
  *
- * @author universidad
+ * @author Matias
  */
 public class Cliente {
  
@@ -90,7 +91,7 @@ public class Cliente {
             InitialContext initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/clientes_db");
-            java.sql.Connection conn = ds.getConnection();
+            Connection conn = ds.getConnection();
             
             String sql =    "DELETE FROM " +
                                 "clientes " +
