@@ -39,12 +39,12 @@ public class ProcesarAltaServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
 
         HashMap<String, Object> errores = new HashMap();
-        
+
         String nombre = request.getParameter("nombre");
         String apellido = request.getParameter("apellido");
-        int nacionalidad = Integer.valueOf(request.getParameter("nacionalidad"));
-        Date fecha_nacimiento = Date.valueOf(request.getParameter("fecha_nacimiento"));
-
+        Integer nacionalidad = Integer.valueOf(request.getParameter("nacionalidad"));
+        String fecha = request.getParameter("fecha_nacimiento");
+        Date fecha_nacimiento = null;
         if (nombre == null || nombre.equals("")) {
             errores.put("nombre", "El nombre es requerido");
         }
@@ -56,14 +56,22 @@ public class ProcesarAltaServlet extends HttpServlet {
         if (nacionalidad == 0) {
             errores.put("nacionalidad", "El apellido es requerido");
         }
-
+        if (fecha == null || fecha.equals("")){
+            errores.put("fecha_nacimiento", "La fecha de nacimiento es requerido");
+        } else {
+            try {
+                fecha_nacimiento = Date.valueOf(fecha);
+            } catch (IllegalArgumentException e){
+                errores.put("fecha_nacimiento", "Ingrese una fecha de nacimiento valida");
+            }
+        }
         if (!errores.isEmpty()) {
             request.setAttribute("errores", errores);
             request.getRequestDispatcher("WEB-INF/jsp/alta_formulario.jsp").forward(request, response);
         } else {
             Cliente.insert(nombre, apellido, fecha_nacimiento, nacionalidad, 1);
         }
-            
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

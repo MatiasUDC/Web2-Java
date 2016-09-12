@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Matias
  */
-@WebServlet(name = "FormularioModificacionServle", urlPatterns = {"/FormularioModificacion"})
-public class FormularioModificacionServle extends HttpServlet {
+@WebServlet(name = "FormularioModificacionServle", urlPatterns = {"/Modificacion"})
+public class FormularioModificacionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

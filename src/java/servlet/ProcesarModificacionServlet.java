@@ -57,7 +57,7 @@ public class ProcesarModificacionServlet extends HttpServlet {
         if (!errores.isEmpty()) {
             request.setAttribute("errores", errores);
             request.setAttribute("id", errores);
-            request.getRequestDispatcher("/FormularioModificacion").forward(request, response);
+            request.getRequestDispatcher("FormularioModificacion").forward(request, response);
         } else {
             //Cliente.update(id, nombre, apellido, fecha_nacimiento, nacionalidad, 1);
         }

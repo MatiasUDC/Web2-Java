@@ -68,7 +68,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     <td>
-                                        <a href="/FormularioModificacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
+                                        <a href="Modificacion?id=<c:out value="${fila['id']}"/>" class="btn btn-default" >
                                             <span class="glyphicon glyphicon-pencil"></span> Modificar
                                         </a>
                                     </td>
@@ -91,7 +91,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                                    <a class="btn btn-danger" href="/ProcesarBaja?id=<c:out value="${fila['id']}"/>">Eliminar</a>
+                                                    <a class="btn btn-danger" href="ProcesarBaja?id=<c:out value="${fila['id']}"/>">Eliminar</a>
                                                 </div>
                                             </div>
                                         </div>
