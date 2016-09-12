@@ -59,9 +59,8 @@ public class Consultas {
             Connection conn = ds.getConnection();
             
             String sql = "SELECT " +
-                            " clientes.id as id," +
-                            " LOWER( apellido ) as apellido, " +
-                            " LOWER( nombre ) as nombre, " +
+                            " clientes.id as id, " +
+                            " CONCAT(clientes.apellido, ', ' , clientes.nombre) as nombre, " +
                             " TIMESTAMPDIFF(YEAR, fecha_nacimiento, CURDATE()) as edad," +
                             " activo," +
                             " LOWER(nacionalidades.nacionalidad) as nacionalidad" +

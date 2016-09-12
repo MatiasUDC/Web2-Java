@@ -43,7 +43,7 @@
                         </div><!-- /.container-fluid -->
                     </nav>
                     <div class="col-md-8">
-                        <h3>Clientes <a href="alta"><small>Nuevo</small></a></h3>
+                        <h3>Clientes <a href="AltaFomulario"><small>Nuevo</small></a></h3>
                         <table class="table table-condensed">
                             <tr>
                                 <td><strong>Nombre</strong></td>
