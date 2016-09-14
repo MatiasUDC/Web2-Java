@@ -68,29 +68,7 @@ public class Permisos implements Serializable{
             }
             
             permisos = new Permisos( permiso );
-            /*
-            query.setLength( 0 );
             
-            query.append( "SELECT p.descripcion as permiso" );//permisos adicionales
-            query.append( "FROM usuario.permiso p " );
-            query.append( "JOIN usuario.permiso_usuario pu" );
-            query.append( "ON p.id = pu.id_permiso " );
-            query.append( "JOIN usuario.usuario u" );
-            query.append( "ON u.id = pu.id_usuario " );
-            query.append( "WHERE " );
-            query.append( "true " );
-            query.append( "AND u.id = ?" );
-            
-            
-            pstmt = conn.prepareStatement( query.toString() );
-            pstmt.setInt(1, idCliente);
-            rs = pstmt.executeQuery();
-            
-            while ( rs.next() ) {
-                if( !permiso.contains( rs.getString( "permiso" ) ) )
-                    permiso.add( rs.getString( "permiso" ) );
-            }
-            */
         } catch (NamingException | SQLException ex) {
             Logger.getLogger(Consultas.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
