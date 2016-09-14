@@ -5,23 +5,26 @@
  */
 package servlet;
 
-import database.Cliente;
+import funcionalidades.Cliente;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import database.Consultas;
+import funcionalidades.Consultas;
+import funcionalidades.Permisos;
+import static funcionalidades.Sesion.control;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Matias
  */
-@WebServlet(name = "formulario_altaServlet", urlPatterns = {"/AltaFomulario"})
+@WebServlet(name = "formulario_altaServlet", urlPatterns = {"/AltaFormulario"})
 public class FormularioAltaServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -36,11 +39,21 @@ public class FormularioAltaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Lista de nacionalidades para el formulario
-        LinkedList nacionalidades = Consultas.getNacionalidades();
-        request.setAttribute("nacionalidades", nacionalidades);
-        
-        request.getRequestDispatcher("WEB-INF/jsp/alta_formulario.jsp").forward(request, response);
+        if (control(request, response)) {
+            response.sendRedirect("login");
+        } else {
+            HttpSession session = request.getSession();
+            Permisos permisos = (Permisos) session.getAttribute("permisos");
+            if (permisos.tienePermiso("INSERT")) {
+                //Lista de nacionalidades para el formulario
+                LinkedList nacionalidades = Consultas.getNacionalidades();
+                request.setAttribute("nacionalidades", nacionalidades);
+
+                request.getRequestDispatcher("WEB-INF/jsp/alta_formulario.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("denegado");
+            }
+        }
     }
 
     /**
@@ -54,54 +67,60 @@ public class FormularioAltaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HashMap<String, Object> errores = new HashMap();
-
-        String nombre = request.getParameter("nombre");
-        String apellido = request.getParameter("apellido");
-        int nacionalidad = Integer.valueOf(request.getParameter("nacionalidad"));
-        String fecha = request.getParameter("fecha_nacimiento");
-        Date fecha_nacimiento= null;
-         
-        //valido nombre
-        if (nombre == null || nombre.equals("")) {
-            errores.put("nombre", "El nombre es requerido");
-        }
-        
-        //valido apellido
-        if (apellido == null || apellido.equals("")) {
-            errores.put("apellido", "El apellido es requerido");
-        }
-
-        //valido nacionalidad
-        if (nacionalidad == 0) {
-            errores.put("nacionalidad", "La nacionalidad es requerido");
-        }
-        
-        //valido fecha
-        if (fecha == null || fecha.equals("")){
-            errores.put("fecha_nacimiento", "La fecha de nacimiento es requerido");
+        if (control(request, response)) {
+            response.sendRedirect("login");
         } else {
-            try {
-                fecha_nacimiento = Date.valueOf(fecha);
-            } catch (IllegalArgumentException e){
-                errores.put("fecha_nacimiento", "Ingrese una fecha de nacimiento valida");
+            HashMap<String, Object> errores = new HashMap();
+
+            String nombre = request.getParameter("nombre");
+            String apellido = request.getParameter("apellido");
+            int nacionalidad = Integer.valueOf(request.getParameter("nacionalidad"));
+            String fecha = request.getParameter("fecha_nacimiento");
+            Date fecha_nacimiento = null;
+
+            //valido nombre
+            if (nombre == null || nombre.equals("")) {
+                errores.put("nombre", "El nombre es requerido");
+            }
+
+            //valido apellido
+            if (apellido == null || apellido.equals("")) {
+                errores.put("apellido", "El apellido es requerido");
+            }
+
+            //valido nacionalidad
+            if (nacionalidad == 0) {
+                errores.put("nacionalidad", "La nacionalidad es requerido");
+            }
+
+            //valido fecha
+            if (fecha == null || fecha.equals("")) {
+                errores.put("fecha_nacimiento", "La fecha de nacimiento es requerido");
+            } else {
+                try {
+                    fecha_nacimiento = Date.valueOf(fecha);
+                } catch (IllegalArgumentException e) {
+                    errores.put("fecha_nacimiento", "Ingrese una fecha de nacimiento valida");
+                }
+            }
+
+            if (!errores.isEmpty()) {
+                //seteo los errores
+                request.setAttribute("errores", errores);
+
+                LinkedList nacionalidades = Consultas.getNacionalidades();
+                request.setAttribute("nacionalidades", nacionalidades);
+                request.getRequestDispatcher("WEB-INF/jsp/alta_formulario.jsp").forward(request, response);
+
+            } else {
+                //inserto y redirecciono
+                HttpSession session = request.getSession();
+                Boolean insertado = true;
+                session.setAttribute("insertado", insertado);
+                Cliente.insert(nombre, apellido, fecha_nacimiento, nacionalidad);
+                response.sendRedirect("index");
             }
         }
-
-        if (!errores.isEmpty()) {
-            //seteo los errores
-            request.setAttribute("errores", errores);
-            
-            LinkedList nacionalidades = Consultas.getNacionalidades();
-            request.setAttribute("nacionalidades", nacionalidades);
-            request.getRequestDispatcher("WEB-INF/jsp/alta_formulario.jsp").forward(request, response);
-            
-        } else {
-            //inserto y redirecciono
-            Cliente.insert(nombre, apellido, fecha_nacimiento, nacionalidad);
-            response.sendRedirect("index");
-        }
-
     }
 
     /**

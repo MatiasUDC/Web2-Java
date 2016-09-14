@@ -5,27 +5,23 @@
  */
 package servlet;
 
-import funcionalidades.Cliente;
-import funcionalidades.Permisos;
-import static funcionalidades.Sesion.control;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Matias
  */
-@WebServlet(name = "ProcesarBajaServlet", urlPatterns = {"/ProcesarBaja"})
-public class ProcesaBajaServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
+public class LoginServlet extends HttpServlet {
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -35,24 +31,9 @@ public class ProcesaBajaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (control(request, response)) {
-            response.sendRedirect("LoginServlet");
-        } else {
-            HttpSession session = request.getSession();
-            Permisos permisos = (Permisos) session.getAttribute("permisos");
-
-            if (permisos.tienePermiso("DELETE")) {
-                int id = Integer.parseInt(request.getParameter("id"));
-                Cliente.delete(id);
-                Boolean eliminado = true;
-                session.setAttribute("eliminado", eliminado);
-                response.sendRedirect("index");
-            } else {
-                response.sendRedirect("PermisoDenegado");
-            }
-        }
-
+        request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(request, response);
     }
+
 
     /**
      * Returns a short description of the servlet.
