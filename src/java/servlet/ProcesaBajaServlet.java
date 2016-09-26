@@ -9,6 +9,7 @@ import funcionalidades.Cliente;
 import funcionalidades.Permisos;
 import static funcionalidades.Sesion.control;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +23,6 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ProcesarBajaServlet", urlPatterns = {"/ProcesarBaja"})
 public class ProcesaBajaServlet extends HttpServlet {
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,18 +38,24 @@ public class ProcesaBajaServlet extends HttpServlet {
         if (control(request, response)) {
             response.sendRedirect("LoginServlet");
         } else {
-            HttpSession session = request.getSession();
-            Permisos permisos = (Permisos) session.getAttribute("permisos");
+            int id = Integer.parseInt(request.getParameter("id"));
+            doPost(request, response,id);
+        }
 
-            if (permisos.tienePermiso("DELETE")) {
-                int id = Integer.parseInt(request.getParameter("id"));
-                Cliente.delete(id);
-                Boolean eliminado = true;
-                session.setAttribute("eliminado", eliminado);
-                response.sendRedirect("index");
-            } else {
-                response.sendRedirect("PermisoDenegado");
-            }
+    }
+        protected void doPost(HttpServletRequest request, HttpServletResponse response,int id)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Permisos permisos = (Permisos) session.getAttribute("permisos");
+
+        if (permisos.tienePermiso("DELETE")) {
+            Cliente.delete(id);
+            Boolean eliminado = true;
+            session.setAttribute("eliminado", eliminado);
+            response.sendRedirect("index");
+
+        } else {
+            response.sendRedirect("PermisoDenegado");
         }
 
     }
